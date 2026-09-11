@@ -1,0 +1,287 @@
+schema_version: 1
+project_defaults:
+  temperature_kelvin: 300.0
+  pressure_bar: 1.0
+  friction_per_ps: 1.0
+  timestep_fs: 2.0
+  nonbonded_cutoff_nm: 1.0
+  ewald_error_tolerance: 0.0005
+  constraints: HBonds
+  rigid_water: true
+  remove_cm_motion: true
+  platform: CUDA
+  cuda_precision: mixed
+  deterministic_forces: false
+  output_stride_ps: 10.0
+  checkpoint_stride_ps: 100.0
+  seed_base: 20260710
+
+phase1:
+  system: lennard_jones_argon
+  particles: 256
+  sigma_nm: 0.34
+  epsilon_kj_mol: 0.997
+  particle_mass_da: 39.948
+  reduced_density: 0.80
+  temperature_kelvin: 120.0
+  cutoff_nm: 1.0
+  switch_nm: 0.9
+  profiles:
+    quick:
+      nvt_ps: 20.0
+      nve_ps: 20.0
+      output_stride_ps: 0.2
+    teaching:
+      nvt_ps: 200.0
+      nve_ps: 200.0
+      output_stride_ps: 1.0
+  gates:
+    max_temperature_relative_error: 0.15
+    max_nve_energy_drift_kj_mol_ns_per_particle: 1.0
+    rdf_first_peak_min: 1.1
+    rdf_first_peak_max: 4.5
+
+phase2:
+  pdb_id: 1UBQ
+  source_url: https://files.rcsb.org/download/1UBQ.pdb
+  ph: 7.0
+  protein_forcefield: amber19/protein.ff19SB.xml
+  water_forcefield: amber19/opc.xml
+  water_model: tip4pew
+  padding_nm: 1.0
+  ionic_strength_molar: 0.15
+  positive_ion: Na+
+  negative_ion: Cl-
+  profiles:
+    quick:
+      minimization_max_iterations: 2000
+      nvt_ps: 20.0
+      npt_restraint_schedule_kj_mol_nm2: [1000.0, 100.0, 10.0]
+      npt_segment_ps: 20.0
+      production_ps: 100.0
+      output_stride_ps: 2.0
+      checkpoint_stride_ps: 20.0
+    teaching:
+      minimization_max_iterations: 10000
+      nvt_ps: 100.0
+      npt_restraint_schedule_kj_mol_nm2: [1000.0, 100.0, 10.0]
+      npt_segment_ps: 200.0
+      production_ps: 2000.0
+      output_stride_ps: 10.0
+      checkpoint_stride_ps: 100.0
+  gates:
+    max_temperature_relative_error: 0.10
+    density_g_ml_min: 0.90
+    density_g_ml_max: 1.15
+    max_ca_rmsd_nm_quick: 0.60
+    max_ca_rmsd_nm_teaching: 0.80
+    max_unphysical_bond_nm: 0.25
+
+phase3:
+  pdb_id: 181L
+  source_url: https://files.rcsb.org/download/181L.pdb
+  ligand_resname: BNZ
+  ligand_sdf_url: https://files.rcsb.org/ligands/download/BNZ_ideal.sdf
+  ligand_formal_charge: 0
+  ph: 7.0
+  protein_forcefield: amber19/protein.ff19SB.xml
+  water_forcefield: amber19/opc.xml
+  water_model: tip4pew
+  small_molecule_forcefield: openff-2.2.1
+  padding_nm: 1.0
+  ionic_strength_molar: 0.15
+  profiles:
+    quick:
+      minimization_max_iterations: 3000
+      nvt_ps: 20.0
+      npt_restraint_schedule_kj_mol_nm2: [1000.0, 100.0, 10.0]
+      npt_segment_ps: 20.0
+      production_ps: 200.0
+      output_stride_ps: 2.0
+      checkpoint_stride_ps: 20.0
+    teaching:
+      minimization_max_iterations: 10000
+      nvt_ps: 100.0
+      npt_restraint_schedule_kj_mol_nm2: [1000.0, 100.0, 10.0]
+      npt_segment_ps: 200.0
+      production_ps: 5000.0
+      output_stride_ps: 10.0
+      checkpoint_stride_ps: 100.0
+  gates:
+    max_temperature_relative_error: 0.10
+    density_g_ml_min: 0.90
+    density_g_ml_max: 1.15
+    max_protein_ca_rmsd_nm: 0.90
+    max_ligand_aligned_rmsd_nm_quick: 0.80
+    max_ligand_com_distance_from_initial_nm: 1.20
+    max_unphysical_bond_nm: 0.25
+
+phase4:
+  pdb_id: 1J4N
+  opm_pdb_url: https://biomembhub.org/shared/opm-assets/pdb/1j4n.pdb
+  opm_metadata_url: https://opm-back.cc.lehigh.edu/opm-backend/primary_structures/pdbid/1j4n
+  opm_hydrophobic_thickness_nm: 3.18
+  expected_protein_chains: 4
+  expected_residues_per_chain: 249
+  expected_source_waters: 371
+  retain_source_waters: true
+  preparation_platform: CPU
+  preparation_cpu_threads: 8
+  preparation_deterministic_forces: true
+  ph: 7.0
+  protein_forcefield: amber19/protein.ff19SB.xml
+  lipid_forcefield: amber19/lipid21.xml
+  water_forcefield: amber19/tip3p.xml
+  water_model: tip3p
+  lipid_type: POPC
+  lipid_resname: POP
+  minimum_padding_nm: 1.0
+  ionic_strength_molar: 0.15
+  positive_ion: Na+
+  negative_ion: Cl-
+  membrane_surface_tension_bar_nm: 0.0
+  pore_radius_nm: 0.45
+  cross_section_half_width_nm: 0.60
+  profiles:
+    quick:
+      minimization_max_iterations: 5000
+      nvt_ps: 20.0
+      npt_restraint_schedule_kj_mol_nm2: [1000.0, 100.0, 10.0]
+      npt_segment_ps: 20.0
+      production_ps: 200.0
+      output_stride_ps: 2.0
+      checkpoint_stride_ps: 20.0
+    teaching:
+      minimization_max_iterations: 20000
+      nvt_ps: 100.0
+      npt_restraint_schedule_kj_mol_nm2: [1000.0, 100.0, 10.0]
+      npt_segment_ps: 500.0
+      production_ps: 5000.0
+      output_stride_ps: 10.0
+      checkpoint_stride_ps: 100.0
+  gates:
+    max_temperature_relative_error: 0.10
+    membrane_thickness_nm_min: 2.5
+    membrane_thickness_nm_max: 5.5
+    area_per_lipid_nm2_min: 0.45
+    area_per_lipid_nm2_max: 0.85
+    max_protein_ca_rmsd_nm: 1.20
+    minimum_intercomponent_heavy_atom_distance_nm: 0.10
+    max_unphysical_bond_nm: 0.25
+    max_leaflet_count_difference: 1
+    max_oligomer_ca_centroid_distance_change_nm: 1.0
+    minimum_outer_slab_water_oxygens: 10
+
+phase5:
+  target: human_5ht2a
+  decision_record: state/decisions/DR-005-5HT2A.md
+  ph: 7.4
+  temperature_kelvin: 310.0
+  pressure_bar: 1.0
+  protein_forcefield: amber19/protein.ff19SB.xml
+  lipid_forcefield: amber19/lipid21.xml
+  water_forcefield: amber19/tip3p.xml
+  water_model: tip3p
+  small_molecule_forcefield: openff-2.2.1
+  partial_charge_method: am1bcc
+  lipid_type: POPC
+  lipid_resname: POP
+  minimum_padding_nm: 1.5
+  ionic_strength_molar: 0.15
+  positive_ion: Na+
+  negative_ion: Cl-
+  membrane_surface_tension_bar_nm: 0.0
+  preparation_platform: CPU
+  preparation_cpu_threads: 8
+  preparation_deterministic_forces: true
+  opm_reference_pdb: inputs/phase05/orientation/7WC5_opm.pdb
+  transmembrane_alignment_ranges:
+    - [75, 97]
+    - [112, 136]
+    - [146, 172]
+    - [192, 215]
+    - [234, 258]
+    - [323, 345]
+    - [361, 383]
+  modeled_icl2_sequence: IHHSRFN
+  modeled_bril_linker_sequence: GSGSG
+  loop_relaxation_restraint_k_kj_mol_nm2: 10000.0
+  loop_relaxation_tolerance_kj_mol_nm: 10.0
+  loop_relaxation_max_iterations: 5000
+  loop_relaxation_cpu_threads: 1
+  ligand_contact_cutoff_nm: 0.45
+  d155_anchor_cutoff_nm: 0.35
+  conditions:
+    lsd:
+      pdb_id: 7WC6
+      source_pdb: inputs/phase05/candidates/7WC6/7WC6.pdb
+      source_mmcif: inputs/phase05/candidates/7WC6/7WC6.cif
+      source_validation_report: inputs/phase05/candidates/7WC6/7wc6_full_validation.pdf
+      ligand_sdf: inputs/phase05/candidates/7WC6/7LD_ideal.sdf
+      ligand_resname: 7LD
+      ligand_name: LSD
+      ligand_protonation_atom: N2
+      ligand_formal_charge: 1
+      seed_offset: 0
+    lisuride:
+      pdb_id: 7WC7
+      source_pdb: inputs/phase05/candidates/7WC7/7WC7.pdb
+      source_mmcif: inputs/phase05/candidates/7WC7/7WC7.cif
+      source_validation_report: inputs/phase05/candidates/7WC7/7wc7_full_validation.pdf
+      ligand_sdf: inputs/phase05/candidates/7WC7/H8G_ideal.sdf
+      ligand_resname: H8G
+      ligand_name: lisuride
+      ligand_protonation_atom: NAX
+      ligand_formal_charge: 1
+      seed_offset: 10
+  profiles:
+    quick:
+      minimization_max_iterations: 5000
+      nvt_ps: 20.0
+      npt_restraint_schedule_kj_mol_nm2: [1000.0, 500.0, 100.0, 10.0]
+      npt_segment_ps: 20.0
+      preproduction_ps: 20.0
+      production_ps: 200.0
+      output_stride_ps: 2.0
+      checkpoint_stride_ps: 20.0
+    teaching:
+      minimization_max_iterations: 20000
+      nvt_ps: 100.0
+      npt_restraint_schedule_kj_mol_nm2: [1000.0, 500.0, 100.0, 10.0]
+      npt_segment_ps: 500.0
+      preproduction_ps: 500.0
+      production_ps: 5000.0
+      output_stride_ps: 10.0
+      checkpoint_stride_ps: 100.0
+  gates:
+    max_opm_alignment_rmsd_nm: 0.20
+    minimum_loop_nonbonded_heavy_atom_distance_nm: 0.08
+    max_loop_covalent_bond_nm: 0.25
+    max_temperature_relative_error: 0.10
+    membrane_thickness_nm_min: 2.5
+    membrane_thickness_nm_max: 5.5
+    area_per_lipid_nm2_min: 0.45
+    area_per_lipid_nm2_max: 0.85
+    max_receptor_tm_ca_rmsd_nm: 0.80
+    max_ligand_aligned_rmsd_nm: 0.80
+    max_ligand_com_distance_from_initial_nm: 1.20
+    minimum_intercomponent_heavy_atom_distance_nm: 0.10
+    max_unphysical_bond_nm: 0.25
+    max_leaflet_count_difference: 1
+    minimum_outer_slab_water_oxygens: 10
+  required_decisions:
+    - receptor_state
+    - pdb_or_model_source
+    - biological_construct
+    - retained_fusion_partners
+    - ligand_identity_and_protonation
+    - receptor_protonation_microstates
+    - disulfide_bonds
+    - missing_loop_policy
+    - retained_structural_waters
+    - membrane_composition
+    - force_field_family
+    - replicate_count_and_length
+  minimum_replicates: 3
+  default_temperature_kelvin: 310.0
+  default_ionic_strength_molar: 0.15

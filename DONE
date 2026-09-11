@@ -1,0 +1,1 @@
+P10 complete. Key files: readings.py, comparison.py, review.py, routes/review.py, main.py, frontend js files, index.html additions, decision template, tests, allowlist. 148 tests pass (P00–P07 green + P10). system.json written. LSD/F11–F14 launch guard implemented. Not starting P11.

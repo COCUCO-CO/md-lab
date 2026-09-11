@@ -1,0 +1,50 @@
+{
+  "checks": {
+    "cuda_available": true,
+    "enough_ram_hint": true,
+    "nvidia_visible": true,
+    "openmm_test_pass": true
+  },
+  "hardware": {
+    "cpu_count_logical": 32,
+    "hostname": "tomas-MS-7D86",
+    "nvidia_smi": [
+      "NVIDIA GeForce RTX 4090, 595.84, 24564, 8.9"
+    ],
+    "platform": "Linux-5.19.0-46-generic-x86_64-with-glibc2.35"
+  },
+  "openmm_platforms": [
+    {
+      "name": "Reference",
+      "speed": 1.0
+    },
+    {
+      "name": "CPU",
+      "speed": 10.0
+    },
+    {
+      "name": "CUDA",
+      "speed": 100.0
+    },
+    {
+      "name": "OpenCL",
+      "speed": 50.0
+    }
+  ],
+  "openmm_test": {
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "\nOpenMM Version: 8.5.2\nGit Revision: 36a30cbca54e727b216b606f3c011b67201eb8b4\n\nThere are 4 Platforms available:\n\n1 Reference - Successfully computed forces\n2 CPU - Successfully computed forces\n3 CUDA - Successfully computed forces\n4 OpenCL - Successfully computed forces\n\nMedian difference in forces between platforms:\n\nReference vs. CPU: 6.30317e-06\nReference vs. CUDA: 6.74406e-06\nCPU vs. CUDA: 7.46854e-07\nReference vs. OpenCL: 6.74321e-06\nCPU vs. OpenCL: 7.7677e-07\nCUDA vs. OpenCL: 1.77604e-07\n\nAll differences are within tolerance.\n"
+  },
+  "openmm_version": "8.5.2",
+  "packages": {
+    "MDAnalysis": "2.10.0",
+    "mdtraj": "1.11.1",
+    "numpy": "2.4.6",
+    "openff-toolkit": "0.18.1",
+    "openmm": "8.5.2",
+    "openmmforcefields": "0.16.0",
+    "pdbfixer": "1.12.0"
+  },
+  "utc": "2026-07-26T21:07:34Z"
+}

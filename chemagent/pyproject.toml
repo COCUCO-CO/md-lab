@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "chemresearch-agent"
+version = "0.1.0"
+description = "Provenance-gated chemistry RAG, scientific tools, and QLoRA training"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+dependencies = []
+
+[project.optional-dependencies]
+train = [
+  "accelerate>=1.2,<2",
+  "bitsandbytes>=0.45,<1",
+  "datasets>=3,<5",
+  "peft>=0.14,<1",
+  "safetensors>=0.5,<1",
+  "torch>=2.5,<3",
+  "transformers>=4.49,<6",
+]
+chem = [
+  "rdkit>=2024.9",
+]
+test = [
+  "pytest>=8,<10",
+  "ruff>=0.9,<1",
+]
+
+[project.scripts]
+chemagent = "chemagent.cli:main"
+chemagent-train = "chemagent.train_qlora:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

@@ -1,0 +1,111 @@
+# A book is never enabled merely because the researcher owns a copy. Add exact
+# edition, rightsholder permission, license evidence URL/document and checksum.
+
+[[books]]
+id = "openstax_chemistry_2e"
+title = "Chemistry 2e"
+authors = "Flowers, Theopold, Langley, Robinson et al."
+edition = "2"
+homepage = "https://openstax.org/books/chemistry-2e/pages/preface"
+license = "CC-BY-NC-SA-4.0_WITH_AI_TRAINING_PROHIBITION"
+approval = "reference_only"
+training_allowed = false
+retrieval_allowed = false
+notes = "The current publisher page expressly prohibits LLM training without permission."
+
+[[books]]
+id = "atkins_physical_chemistry"
+title = "Atkins' Physical Chemistry"
+authors = "Atkins, de Paula, Keeler"
+edition = "UNSPECIFIED"
+homepage = ""
+license = "PROPRIETARY"
+approval = "rights_required"
+training_allowed = false
+retrieval_allowed = false
+notes = "Desired advanced reference; do not ingest without written ML/RAG permission."
+
+[[books]]
+id = "szabo_ostlund_modern_quantum_chemistry"
+title = "Modern Quantum Chemistry"
+authors = "Szabo and Ostlund"
+edition = "UNSPECIFIED"
+homepage = ""
+license = "PROPRIETARY"
+approval = "rights_required"
+training_allowed = false
+retrieval_allowed = false
+notes = "Desired quantum chemistry reference; rights required."
+
+[[books]]
+id = "helgaker_molecular_electronic_structure"
+title = "Molecular Electronic-Structure Theory"
+authors = "Helgaker, Jorgensen and Olsen"
+edition = "UNSPECIFIED"
+homepage = ""
+license = "PROPRIETARY"
+approval = "rights_required"
+training_allowed = false
+retrieval_allowed = false
+notes = "Desired high-level electronic-structure reference; rights required."
+
+[[books]]
+id = "frenkel_smit_understanding_molecular_simulation"
+title = "Understanding Molecular Simulation"
+authors = "Frenkel and Smit"
+edition = "UNSPECIFIED"
+homepage = ""
+license = "PROPRIETARY"
+approval = "rights_required"
+training_allowed = false
+retrieval_allowed = false
+notes = "Desired molecular simulation reference; rights required."
+
+[[books]]
+id = "tuckerman_statistical_mechanics"
+title = "Statistical Mechanics: Theory and Molecular Simulation"
+authors = "Tuckerman"
+edition = "UNSPECIFIED"
+homepage = ""
+license = "PROPRIETARY"
+approval = "rights_required"
+training_allowed = false
+retrieval_allowed = false
+notes = "Desired statistical mechanics reference; rights required."
+
+[[books]]
+id = "clayden_organic_chemistry"
+title = "Organic Chemistry"
+authors = "Clayden, Greeves and Warren"
+edition = "UNSPECIFIED"
+homepage = ""
+license = "PROPRIETARY"
+approval = "rights_required"
+training_allowed = false
+retrieval_allowed = false
+notes = "Desired organic chemistry reference; rights required."
+
+[[books]]
+id = "carey_sundberg_advanced_organic_chemistry"
+title = "Advanced Organic Chemistry"
+authors = "Carey and Sundberg"
+edition = "UNSPECIFIED"
+homepage = ""
+license = "PROPRIETARY"
+approval = "rights_required"
+training_allowed = false
+retrieval_allowed = false
+notes = "Desired advanced synthesis/mechanism reference; rights required."
+
+[[books]]
+id = "anslyn_dougherty_physical_organic"
+title = "Modern Physical Organic Chemistry"
+authors = "Anslyn and Dougherty"
+edition = "UNSPECIFIED"
+homepage = ""
+license = "PROPRIETARY"
+approval = "rights_required"
+training_allowed = false
+retrieval_allowed = false
+notes = "Desired mechanistic chemistry reference; rights required."
+

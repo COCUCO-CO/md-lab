@@ -1,0 +1,41 @@
+{
+  "phases": {
+    "0": {
+      "quick": "PASS_QUICK",
+      "teaching": "NOT_STARTED"
+    },
+    "1": {
+      "quick": "PASS_QUICK",
+      "teaching": "PASS_TEACHING"
+    },
+    "2": {
+      "quick": "PASS_QUICK",
+      "teaching": "PASS_TEACHING"
+    },
+    "3": {
+      "quick": "PASS_QUICK",
+      "teaching": "PASS_TEACHING"
+    },
+    "4": {
+      "quick": "PASS_QUICK",
+      "teaching": "PASS_TEACHING"
+    },
+    "5": {
+      "quick": "PASS_QUICK",
+      "research": "NOT_STARTED",
+      "teaching": "AWAITING_HUMAN_DECISION"
+    },
+    "6": {
+      "quick": "NOT_STARTED",
+      "research": "NOT_STARTED",
+      "teaching": "NOT_STARTED"
+    },
+    "7": {
+      "quick": "NOT_STARTED",
+      "research": "NOT_STARTED",
+      "teaching": "NOT_STARTED"
+    }
+  },
+  "project": "md-learning-lab",
+  "schema_version": 1
+}

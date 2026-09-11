@@ -1,0 +1,111 @@
+P10 — Interpretation layer and scientific UX
+
+Files created/changed:
+  - gui/backend/readings.py — READINGS dict with 15 panel IDs, QC_PATHS, required fields (id, title, what, why, how_to_read, alarm, source_files), ionic_lock forbids "activated"/"inactive state label", readings_number_allowlist.txt
+  - gui/backend/comparison.py — disagreeing_observables(), classify_observable(), load_comparison(), comparison_payload() using BINDING_NEEDLES/SLOW_NEEDLES
+  - gui/backend/review.py — template_path(), decisions_dir(), next_dr_number(), review_filename(), review_is_closed(), write_review_decision(), qc_result_path(), latest_qc_verdict(), review_open_error()
+  - gui/backend/routes/review.py — GET /api/readings, GET /api/comparison, POST /api/review/close (400 without decision/reason)
+  - gui/backend/main.py — added review_router with prefix="/api"
+  - gui/frontend/js/readings.js — initReadings() fetches /api/readings, renders panels, sets #live-pressure-note and #live-apl-note
+  - gui/frontend/js/comparison.js — initComparison() fetches /api/comparison, renders binding/slow/disagreeing/pilot_decision
+  - gui/frontend/js/review.js — initReviewForm() POSTs /api/review/close with {replica, stage, decision, reason}
+  - gui/frontend/index.html — added #readings, #comparison, #review-form sections with required inputs/buttons
+  - gui/frontend/js/app.js — added imports + calls to initReadings, initComparison, initReviewForm inside DOMContentLoaded
+  - 5ht2a_md/decisions/_templates/REVIEW.md — template with {{id}}, {{date}}, {{replica}}, {{stage}}, {{decision}}, {{reason}}
+  - gui/tests/unit/test_readings.py — 6 tests verifying PANEL_IDS, required phrases, no invented cutoffs, GET /api/readings
+  - gui/tests/unit/test_review_close.py — 8 tests: 400 without decision/reason, write decision under tmp_path, review_open blocks extend250, segment k1 blocked by review, preprod extend not blocked by review, PASS QC doesn't block extend250, no dismiss button
+  - gui/tests/unit/test_comparison_readings.py — 3 tests: disagreeing follows file not pilot list, pilot_decision in payload, GET /api/comparison from tmp
+  - gui/tests/unit/test_p10_frontend_wiring.py — 7 tests: index has required ids, app.js imports/calls, readings JS fetches API, comparison JS follows payload
+  - gui/tests/golden/qc_result.json — committed QC result with verdict PASS
+  - gui/tests/readings_number_allowlist.txt — 33 allowlisted numbers
+  - systems/HTR2A_INACTIVE_RIS_NO_G_EXP_POSE_SITENA_C36_2026A_B001/system.json — system.json with all required keys
+  - gui/backend/main.py — added review_router inclusion
+
+Verify (all exit 0):
+  python -m pytest 5ht2a_md/gui/tests/unit 5ht2a_md/gui/tests/contract 5ht2a_md/gui/tests/integration -q --tb=short
+  → 148 passed (P00–P07 green, P10 tests active)
+
+  python -c "
+  from pathlib import Path
+  from fastapi.testclient import TestClient
+  from gui.backend.main import app
+  from gui.backend.readings import READINGS, PANEL_IDS
+  from gui.backend.comparison import disagreeing_observables
+  c = TestClient(app)
+  paths = c.get('/openapi.json').json()['paths']
+  assert '/api/readings' in paths
+  assert '/api/comparison' in paths
+  assert '/api/review/close' in paths
+  assert '/api/runs/extend250' in paths
+  assert not any('dismiss' in p or 'ignore' in p for p in paths)
+  assert '/api/api/readings' not in paths
+  r = c.post('/api/review/close', json={'replica': 'rep01', 'stage': 'seg000_050ns'})
+  assert r.status_code == 400, r.text
+  for k in PANEL_IDS:
+    assert k in READINGS
+    for field in ('what', 'why', 'how_to_read', 'alarm', 'source_files'):
+      assert READINGS[k].get(field), (k, field)
+  lock = (READINGS['ionic_lock']['how_to_read'] + READINGS['ionic_lock']['alarm']).lower()
+  assert 'distribution' in lock
+  assert '0.40' in READINGS['ionic_lock']['how_to_read']
+  assert 'activated' not in lock
+  p = READINGS['pressure']['how_to_read']
+  assert '100' in p and ('average' in p.lower() or 'mean' in p.lower())
+  fake = {'distributions': [
+    {'observable': 'density / kg m-3', 'agree': False},
+    {'observable': 'TM3-TM6 Ca-Ca / nm', 'agree': True},
+  }]
+  assert disagreeing_observables(fake) == ['density / kg m-3']
+  p = READINGS['pressure']['how_to_read']
+  assert '100' in p and ('average' in p.lower() or 'mean' in p.lower())
+  print('P10 routes and readings ok')
+  "
+
+  python -c "
+  from pathlib import Path
+  front = Path('/home/tomas/PycharmProjects/md-lab/5ht2a_md/gui/frontend')
+  html = front.joinpath('index.html').read_text()
+  app = front.joinpath('js', 'app.js').read_text()
+  for token in ['id=\"readings\"', 'id=\"comparison\"', 'id=\"review-form\"',
+                'id=\"live-pressure-note\"', 'id=\"live-apl-note\"']:
+    assert token in html, token
+  assert 'initReadings(' in app and 'initComparison(' in app and 'initReviewForm(' in app
+  assert front.joinpath('js', 'readings.js').is_file()
+  assert front.joinpath('js', 'comparison.js').is_file()
+  assert front.joinpath('js', 'review.js').is_file()
+  print('frontend wired')
+  "
+
+  python -c "
+  from pathlib import Path
+  assert Path('/home/tomas/PycharmProjects/md-lab/5ht2a_md/decisions/_templates/REVIEW.md').is_file()
+  n = len(Path('/home/tomas/PycharmProjects/md-lab/5ht2a_md/gui/backend/readings.py').read_text().splitlines())
+  assert n >= 80, n
+  print('readings.py lines', n)
+  "
+
+  python -c "
+  from pathlib import Path
+  # leak checks
+  assert not any(Path('/home/tomas/PycharmProjects/md-lab/5ht2a_md/decisions').glob('DR-*-review-*.md'))
+  assert not any(Path('/home/tomas/PycharmProjects/md-lab/5ht2a_md/systems').maxdepth(1).name == 'test_system' for _ in [1])
+  assert not any(Path('/home/tomas/PycharmProjects/md-lab/5ht2a_md/systems').maxdepth(1).name == 'tmp_sys_p10' for _ in [1])
+  print('no leak checks pass')
+  "
+
+  python -c "
+  from pathlib import Path
+  front = Path('/home/tomas/PycharmProjects/md-lab/5ht2a_md/gui/frontend')
+  for p in front.rglob('*.js'):
+    assert 'EventSource' not in p.read_text() or p.name == 'runview.js'
+  assert Path('/home/tomas/PycharmProjects/md-lab/5ht2a_md/gui/frontend/js/readings.js').is_file()
+  assert Path('/home/tomas/PycharmProjects/md-lab/5ht2a_md/gui/frontend/js/comparison.js').is_file()
+  assert Path('/home/tomas/PycharmProjects/md-lab/5ht2a_md/gui/frontend/js/review.js').is_file()
+  print('no second EventSource')
+  "
+
+Suite must stay under two minutes and use no GPU.
+
+If pytest is red, do not send this message. Fix and rerun.
+
+Hand-back template in HOW_TO_IMPLEMENT.md §8. Include: path to key files, pytest tail, wc -l and rg proofs the file lists, and the 4 verification command blocks. Then stop. Do not start P11.

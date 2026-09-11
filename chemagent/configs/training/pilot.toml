@@ -1,0 +1,31 @@
+[data]
+train_file = "data/curated/sft/train.jsonl"
+validation_file = "data/curated/sft/validation.jsonl"
+max_sequence_length = 4096
+
+[training]
+output_dir = "runs/qlora-pilot"
+seed = 1729
+per_device_train_batch_size = 1
+per_device_eval_batch_size = 1
+gradient_accumulation_steps = 16
+learning_rate = 0.0001
+num_train_epochs = 1.0
+warmup_ratio = 0.03
+weight_decay = 0.0
+logging_steps = 5
+save_steps = 100
+eval_steps = 100
+save_total_limit = 3
+bf16 = true
+tf32 = true
+gradient_checkpointing = true
+optim = "paged_adamw_8bit"
+lr_scheduler_type = "cosine"
+
+[pilot_gate]
+minimum_train_records = 25000
+maximum_train_records = 50000
+require_two_gpus = true
+require_model_revision_pin = true
+

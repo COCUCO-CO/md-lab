@@ -1,0 +1,35 @@
+name: mdlab
+
+channel_priority: strict
+dependencies:
+  - python=3.12
+  - openmm=8.5.2
+  - openmmforcefields=0.16.0
+  - openff-toolkit=0.18.1
+  - rdkit
+  - pdbfixer
+  - mdanalysis>=2.10,<2.11
+  - mdtraj>=1.11.1,<1.12
+  - numpy>=2.0,<2.5
+  - scipy>=1.13
+  - pandas>=2.2,<3
+  - matplotlib>=3.9
+  - pyyaml>=6
+  - requests>=2.32
+  - beautifulsoup4>=4.12
+  - lxml>=5
+  - py3dmol>=2.4
+  - jupyterlab>=4
+  - ipykernel>=6
+  - pytest>=8
+  - rich>=13
+  - psutil>=6
+  - tqdm>=4
+  - networkx>=3
+  - scikit-learn>=1.5
+  - statsmodels>=0.14
+  - ffmpeg
+  - git
+  - pip
+  - pip:
+      - kaleido>=0.2.1

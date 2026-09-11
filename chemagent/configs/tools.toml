@@ -1,0 +1,58 @@
+[[tools]]
+id = "rdkit"
+role = "cheminformatics"
+open_source = true
+required_for = ["structure_validation", "reaction_validation"]
+
+[[tools]]
+id = "rxnmapper"
+role = "atom_mapping"
+open_source = true
+required_for = ["reaction_curation"]
+
+[[tools]]
+id = "retrodfrm_r_8b"
+role = "single_step_retrosynthesis"
+open_source = true
+model_id = "OpenDFM/RetroDFM-R-8B"
+
+[[tools]]
+id = "aizynthfinder"
+role = "multistep_retrosynthesis_search"
+open_source = true
+
+[[tools]]
+id = "pyscf"
+role = "electronic_structure"
+open_source = true
+
+[[tools]]
+id = "psi4"
+role = "electronic_structure"
+open_source = true
+
+[[tools]]
+id = "cp2k"
+role = "periodic_quantum_chemistry"
+open_source = true
+
+[[tools]]
+id = "quantum_espresso"
+role = "periodic_dft"
+open_source = true
+
+[[tools]]
+id = "openmm"
+role = "molecular_dynamics"
+open_source = true
+
+[[tools]]
+id = "gromacs"
+role = "molecular_dynamics"
+open_source = true
+
+[[tools]]
+id = "lammps"
+role = "materials_molecular_dynamics"
+open_source = true
+

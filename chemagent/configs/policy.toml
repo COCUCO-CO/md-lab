@@ -1,0 +1,60 @@
+[licenses]
+training_allowlist = [
+  "CC0-1.0",
+  "CC-BY-4.0",
+  "CC-BY-SA-4.0",
+  "CC-BY-SA-3.0",
+  "Apache-2.0",
+  "MIT",
+  "BSD-3-Clause",
+  "AGPL-3.0",
+]
+retrieval_allowlist = [
+  "CC0-1.0",
+  "CC-BY-4.0",
+  "CC-BY-SA-4.0",
+  "CC-BY-SA-3.0",
+  "Apache-2.0",
+  "MIT",
+  "BSD-3-Clause",
+  "AGPL-3.0",
+]
+denied = [
+  "CC-BY-ND-4.0",
+  "CC-BY-NC-ND-4.0",
+  "PROPRIETARY",
+  "UNKNOWN",
+]
+
+[records]
+required_fields = [
+  "record_id",
+  "task",
+  "messages",
+  "source_ids",
+  "license",
+  "license_evidence",
+  "evidence",
+  "split_group",
+  "observation_kind",
+  "procedural",
+  "safety_tags",
+]
+allowed_observation_kinds = ["observed", "extracted", "calculated", "predicted", "didactic"]
+
+[safety]
+blocked_procedural_tags = [
+  "chemical_warfare",
+  "explosive",
+  "high_consequence_toxicant",
+  "illegal_drug",
+  "autonomous_laboratory",
+]
+hazard_knowledge_for_screening = true
+require_human_review_for_novel_routes = true
+require_human_review_for_simulation_claims = true
+
+[evaluation]
+reserved_source_ids = ["choriso", "paroutes", "uspto_50k"]
+split_unit_priority = ["benchmark", "time", "patent_family", "doi", "target_series", "scaffold"]
+

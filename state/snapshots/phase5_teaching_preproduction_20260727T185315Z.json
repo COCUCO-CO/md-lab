@@ -1,0 +1,10 @@
+{
+  "created_utc": "2026-07-27T18:53:15Z",
+  "decision_record_sha256": "a688e90bed4e752165dd20af53b73204922fd18c49f50b345ff3bc9de3a2456f",
+  "prepared_system_pdb_sha256": {
+    "lisuride": "10a1ffe00713b07939632ef4bde67ff993033cc9a80cc4049fd9a855bd7be17f",
+    "lsd": "a65c473e67e3c001d63b11dc5dab8985b11a75c9def2b4f61ea72e743ff53639"
+  },
+  "resolved_config_sha256": "158e6d961bca5d75eb97c8af2dd03e86d307214fce227d9e646d617d608c4e74",
+  "run_id": "phase05_teaching_20260727T184752Z_nogit"
+}

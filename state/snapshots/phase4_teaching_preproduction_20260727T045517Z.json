@@ -1,0 +1,23 @@
+{
+  "git_repository": false,
+  "profile": "teaching",
+  "purpose": "Immutable configuration/code snapshot before the long Phase 4 teaching run",
+  "sha256": {
+    "configs/profiles.yaml": "0aad2346ed56c3a00ae0d2c32375d8c66e31647f1e8147c7b872f841845a9858",
+    "docs/05_PHASE4_MEMBRANE.md": "3c88a4cb98c7c7079bd5bbc2adbdd638ef224a66ab6ad23dbdfce97eebe6f6ba",
+    "docs/decisions/DR-002-phase4-source-waters.md": "4677581ccb1a0c9c2ce665f3c2a3338aad773ddab86c5a03c165459b0488791e",
+    "docs/decisions/DR-003-phase4-construction-gates.md": "a7c72812e363e93da6b360c42b3cdfaf55b8bb9417318b30ae4541ae0e9a58b2",
+    "docs/decisions/DR-004-phase4-preparation-platform.md": "bd297a3ccab1ce60c1f2112bd7c44e9ed82902a3468250af91fa042ef19ce604",
+    "docs/decisions/DR-005-periodic-protein-restraints.md": "cfc4f2245df1d002446bc5ead49faceca0b5b769f39bc0727ad97d06f72d227b",
+    "scripts/phase4_analyze.py": "02101f252d52b1a16140fc4874ba06ec271776e17328566bad44ceb89b16db31",
+    "scripts/phase4_run.py": "3639ee327254614490511af7d4c84c01690eaf5e153b6c1a55bb16545de07a1a",
+    "scripts/render_trajectory.py": "5cb941979938151c76d4b4f6ed0af85d351161c6af14ef8d59710e4fbb157a78",
+    "src/mdlab/biomolecular.py": "46a1f74cf5e2d5432db35b69db473e67784f301b1b41e950749a33add1e4997d",
+    "src/mdlab/openmm_utils.py": "fa99038abd102ab3701ef6fcd28b52aa19f56d1ffff8615f81c7f62446d26fe7"
+  },
+  "tests": {
+    "command": ".venv/conda/bin/pytest -q",
+    "result": "16 passed in 2.97s"
+  },
+  "utc": "2026-07-27T04:55:17Z"
+}

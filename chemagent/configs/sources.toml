@@ -1,0 +1,255 @@
+# `approved` means the registry metadata is sufficient for the stated use. It
+# does not replace per-file attribution, checksum and version manifests.
+
+[[sources]]
+id = "uspto_lowe"
+name = "USPTO reactions extracted by Daniel Lowe"
+domain = "organic_synthesis"
+homepage = "https://figshare.com/articles/dataset/Chemical_reactions_from_US_patents_1976-Sep2016_/5104873"
+license = "CC0-1.0"
+approval = "approved"
+training_allowed = true
+retrieval_allowed = true
+benchmark_only = false
+notes = "Deduplicate application/grant and patent families; preserve paragraph provenance."
+
+[[sources]]
+id = "ord"
+name = "Open Reaction Database"
+domain = "reaction_conditions"
+homepage = "https://github.com/Open-Reaction-Database/ord-data"
+license = "CC-BY-SA-4.0"
+approval = "approved"
+training_allowed = true
+retrieval_allowed = true
+benchmark_only = false
+notes = "Retain failed outcomes, measurements, units and dataset identifiers."
+
+[[sources]]
+id = "rhea"
+name = "Rhea biochemical reactions"
+domain = "biochemistry"
+homepage = "https://www.rhea-db.org/help/download"
+license = "CC-BY-4.0"
+approval = "approved"
+training_allowed = true
+retrieval_allowed = true
+benchmark_only = false
+notes = "Use versioned releases and retain reaction direction and cross-references."
+
+[[sources]]
+id = "smolinstruct"
+name = "SMolInstruct"
+domain = "molecular_instruction"
+homepage = "https://huggingface.co/datasets/osunlp/SMolInstruct"
+license = "CC-BY-4.0"
+approval = "approved"
+training_allowed = true
+retrieval_allowed = false
+benchmark_only = false
+notes = "Use train split only and decontaminate all benchmark records."
+
+[[sources]]
+id = "spice"
+name = "SPICE quantum chemistry dataset"
+domain = "quantum_chemistry"
+homepage = "https://github.com/openmm/spice-dataset"
+license = "CC0-1.0"
+approval = "approved"
+training_allowed = true
+retrieval_allowed = true
+benchmark_only = false
+notes = "Keep geometries, energies, forces, level of theory and release DOI structured; do not stringify arrays into LLM prose."
+
+[[sources]]
+id = "oc25"
+name = "Open Catalyst 2025"
+domain = "catalysis_materials"
+homepage = "https://fair-chem.github.io/oc25/"
+license = "CC-BY-4.0"
+approval = "approved"
+training_allowed = true
+retrieval_allowed = true
+benchmark_only = false
+notes = "Use for specialist potentials and grounded tool tasks, not raw language-model tokenization."
+
+[[sources]]
+id = "chebi"
+name = "ChEBI"
+domain = "chemical_ontology"
+homepage = "https://www.ebi.ac.uk/chebi/beta/downloads"
+license = "CC-BY-4.0"
+approval = "approved"
+training_allowed = true
+retrieval_allowed = true
+benchmark_only = false
+notes = "Preserve ontology version, entity ID and parent relationships."
+
+[[sources]]
+id = "chembl"
+name = "ChEMBL"
+domain = "medicinal_chemistry"
+homepage = "https://www.ebi.ac.uk/chembl/"
+license = "CC-BY-SA-3.0"
+approval = "approved"
+training_allowed = true
+retrieval_allowed = true
+benchmark_only = false
+notes = "Preserve assay, target confidence, units, relation operators and release."
+
+[[sources]]
+id = "opentargets"
+name = "Open Targets Platform"
+domain = "target_disease_evidence"
+homepage = "https://platform-docs.opentargets.org/licence"
+license = "CC0-1.0"
+approval = "approved"
+training_allowed = true
+retrieval_allowed = true
+benchmark_only = false
+notes = "Audit upstream-source restrictions and preserve evidence type."
+
+[[sources]]
+id = "uniprot"
+name = "UniProt"
+domain = "proteins"
+homepage = "https://www.uniprot.org/help/downloads"
+license = "CC-BY-4.0"
+approval = "approved"
+training_allowed = true
+retrieval_allowed = true
+benchmark_only = false
+notes = "Prefer reviewed entries and record release and accession."
+
+[[sources]]
+id = "rcsb_pdb"
+name = "RCSB Protein Data Bank"
+domain = "structural_biology"
+homepage = "https://www.rcsb.org/pages/usage-policy"
+license = "CC0-1.0"
+approval = "approved"
+training_allowed = true
+retrieval_allowed = true
+benchmark_only = false
+notes = "Preserve PDB ID, assembly, experimental method and revision."
+
+[[sources]]
+id = "crossref_metadata"
+name = "Crossref metadata excluding copyrighted abstracts"
+domain = "bibliography"
+homepage = "https://www.crossref.org/documentation/retrieve-metadata/"
+license = "CC0-1.0"
+approval = "approved"
+training_allowed = true
+retrieval_allowed = true
+benchmark_only = false
+notes = "Do not assume abstract text has the metadata license."
+
+[[sources]]
+id = "mdlab_local"
+name = "Local MD Learning Lab documentation"
+domain = "molecular_dynamics"
+homepage = "../README.md"
+license = "MIT"
+approval = "approved"
+training_allowed = true
+retrieval_allowed = true
+benchmark_only = false
+notes = "Only authored documentation; never ingest trajectories or unapproved scientific interpretations as truth."
+
+[[sources]]
+id = "choriso"
+name = "CHORISO"
+domain = "reaction_benchmark"
+homepage = "https://figshare.com/articles/dataset/CHORISO_-_chemical_reaction_SMILES_from_academic_journals/22598230"
+license = "CC-BY-4.0"
+approval = "approved"
+training_allowed = false
+retrieval_allowed = false
+benchmark_only = true
+notes = "Reserved out-of-distribution evaluation source."
+
+[[sources]]
+id = "paroutes"
+name = "PaRoutes"
+domain = "retrosynthesis_benchmark"
+homepage = "https://github.com/MolecularAI/PaRoutes"
+license = "UNKNOWN"
+approval = "license_review"
+training_allowed = false
+retrieval_allowed = false
+benchmark_only = true
+notes = "Reserve for evaluation; verify the license of each associated artifact."
+
+[[sources]]
+id = "uspto_50k"
+name = "USPTO-50K benchmark"
+domain = "retrosynthesis_benchmark"
+homepage = "https://github.com/coleygroup/openretro"
+license = "UNKNOWN"
+approval = "license_review"
+training_allowed = false
+retrieval_allowed = false
+benchmark_only = true
+notes = "Reserved benchmark; no training records."
+
+[[sources]]
+id = "pmc_oa"
+name = "PubMed Central Open Access Subset"
+domain = "scientific_literature"
+homepage = "https://pmc.ncbi.nlm.nih.gov/tools/openftlist/"
+license = "PER_RECORD"
+approval = "per_record_review"
+training_allowed = false
+retrieval_allowed = false
+benchmark_only = false
+notes = "Create approved child entries per article/license batch before ingestion."
+
+[[sources]]
+id = "pubchem"
+name = "PubChem"
+domain = "chemical_information"
+homepage = "https://pubchem.ncbi.nlm.nih.gov/docs/downloads"
+license = "PER_RECORD"
+approval = "per_record_review"
+training_allowed = false
+retrieval_allowed = false
+benchmark_only = false
+notes = "Whitelist contributor sources; PubChem hosting does not grant one blanket license."
+
+[[sources]]
+id = "bindingdb"
+name = "BindingDB"
+domain = "binding_affinity"
+homepage = "https://www.bindingdb.org/rwd/bind/chemsearch/marvin/Download.jsp"
+license = "PER_RECORD"
+approval = "per_record_review"
+training_allowed = false
+retrieval_allowed = false
+benchmark_only = false
+notes = "Curated data and imported ChEMBL records have different licenses."
+
+[[sources]]
+id = "qcarchive"
+name = "MolSSI QCArchive"
+domain = "quantum_chemistry"
+homepage = "https://docs.qcarchive.molssi.org/user_guide/datasets/"
+license = "PER_DATASET"
+approval = "per_record_review"
+training_allowed = false
+retrieval_allowed = false
+benchmark_only = false
+notes = "Approve each dataset only after locating explicit data licensing and provenance."
+
+[[sources]]
+id = "materials_project"
+name = "Materials Project"
+domain = "materials_chemistry"
+homepage = "https://docs.materialsproject.org/downloading-data/how-do-i-download-the-materials-project-database"
+license = "PER_COLLECTION"
+approval = "license_review"
+training_allowed = false
+retrieval_allowed = false
+benchmark_only = false
+notes = "Terms and upstream collection licenses vary; GNoME-originated data is noncommercial."
+

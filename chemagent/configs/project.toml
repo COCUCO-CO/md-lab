@@ -1,0 +1,16 @@
+[project]
+name = "chemresearch-agent"
+mode = "research"
+default_language = "es"
+license_profile = "open_weights_research"
+expected_gpu_count = 2
+minimum_gpu_memory_mib = 23500
+random_seed = 1729
+
+[paths]
+source_registry = "configs/sources.toml"
+book_registry = "configs/books.toml"
+policy = "configs/policy.toml"
+model = "configs/models/chemdfm_r_14b_qlora.toml"
+training = "configs/training/pilot.toml"
+

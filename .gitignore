@@ -1,0 +1,79 @@
+.venv/
+.tools/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+outputs/**
+!outputs/.gitkeep
+inputs/**
+!inputs/.gitkeep
+artifacts/**
+!artifacts/.gitkeep
+state/runs/
+*.log
+.DS_Store
+
+# Chemistry research agent: large, downloaded and generated artifacts.
+chemagent/data/raw/**
+chemagent/data/staged/**
+chemagent/data/curated/**
+chemagent/data/indexes/**
+chemagent/models/**
+chemagent/runs/**
+!chemagent/data/raw/.gitkeep
+!chemagent/data/staged/.gitkeep
+!chemagent/data/curated/.gitkeep
+!chemagent/data/indexes/.gitkeep
+!chemagent/models/.gitkeep
+!chemagent/runs/.gitkeep
+
+# The 5ht2a_md campaign is its own git repository (own history and remote), so it
+# is not tracked here. Everything under it stays on disk only.
+5ht2a_md/
+
+# ---------------------------------------------------------------------------
+# Molecular dynamics campaign (5ht2a_md)
+#
+# What belongs in git: every input needed to reproduce a run, every decision, and
+# every piece of numerical evidence small enough to read. What does not: the
+# trajectories themselves and the binary runtime state, because they are large,
+# regenerable from the inputs, and are not what a reader reviews. The filesystem
+# is the data archive; git is the record of how the data was produced.
+# ---------------------------------------------------------------------------
+
+# Trajectories and binary runtime state. A single 20 ns stage writes a 217 MB .xtc.
+*.xtc
+*.trr
+*.cpt
+*.tpr
+*.edr.bak
+
+# Coordinate snapshots, about 4 MB each. The one exception is the frozen end state of
+# the CHARMM-GUI equilibration, which is the common origin of every replica and is
+# small enough to be worth versioning: with it, the topology and the .mdp files, the
+# whole production is reproducible without re-running the preparation.
+*.gro
+!5ht2a_md/systems/*/equilibration/step6.6_equilibration_site_na.gro
+
+# Downloaded archives and force-field bundles: recoverable from their source.
+*.tgz
+*.tar.gz
+5ht2a_md/raw/charmmgui_bundles/
+
+# The CHARMM-GUI Step 6 package, 716 MB. It is authoritative source material and is
+# preserved on disk, not in git. Its provenance is recorded in the reports and its
+# checksums in FROZEN_INPUTS_SHA256SUMS.txt, so the version used here is verifiable.
+5ht2a_md/construction/*/F8_submission/charmm-gui-step6/
+
+# GROMACS numbered backups, and the lock file that names a live mdrun.
+\#*\#
+.mdrun.pid
+
+# Logs are ignored project-wide by the rule above. These are the exceptions, because
+# they are the primary record of what actually ran: what grompp compiled, what the
+# stage validator concluded, and GROMACS's own account of each run including its
+# performance and any LINCS or constraint warning.
+!5ht2a_md/**/grompp_*.log
+!5ht2a_md/**/VALIDATION_*.log
+!5ht2a_md/systems/**/*.log
+!5ht2a_md/logs/*.log

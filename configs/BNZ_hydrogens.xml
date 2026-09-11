@@ -1,0 +1,10 @@
+<Residues>
+ <Residue name="BNZ">
+  <H name="H1" parent="C1"/>
+  <H name="H2" parent="C2"/>
+  <H name="H3" parent="C3"/>
+  <H name="H4" parent="C4"/>
+  <H name="H5" parent="C5"/>
+  <H name="H6" parent="C6"/>
+ </Residue>
+</Residues>
