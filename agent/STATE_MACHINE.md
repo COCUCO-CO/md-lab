@@ -35,6 +35,23 @@ AWAITING_HUMAN_DECISION -> APPROVED_FOR_RESEARCH only with signed decision recor
 
 A failed state never transitions by editing JSON. Start a new run after a documented correction.
 
+## Who writes which state
+
+`state/progress.json` contains the keys `0`…`7`; phases 5-7 also carry a
+`research` profile. The only writers are `scripts/labctl.py` and the Phase 5
+launchers (which shell out to it):
+
+| Writer | States it writes |
+|---|---|
+| `scripts/phase5_run.py` | `PREFLIGHT_RUNNING` on start, then `READY` (preflight passed), `SIMULATION_RUNNING`, and on failure `PREFLIGHT_FAILED` or `SIMULATION_FAILED` |
+| `scripts/phase5_analyze.py` | `ANALYSIS_RUNNING`, then `GATE_FAILED` (and exit 1) or `ANALYSIS_FAILED` on an analysis error |
+| `make phaseN-analysis` via `labctl complete` | `PASS_QUICK`/`PASS_TEACHING`, chosen from the profile |
+| `make phase5-analysis PROFILE=teaching` | overrides the above with `AWAITING_HUMAN_DECISION` |
+| `labctl set <phase> <profile> <STATE>` | any state; the human/agent escape hatch, e.g. Phase 0 bookkeeping or `research: NOT_STARTED` |
+
+Phases 1-4 have no in-script progress writes: their gate outcome is in the run's
+`gate.json`, and the analysis target records it through `labctl complete`.
+
 ## Run identifiers
 
 Use:

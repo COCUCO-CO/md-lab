@@ -102,7 +102,12 @@ The gate requires:
 - protein geometry remains sane;
 - maximum covalent-bond length does not exceed the established 0.25 nm
   tutorial sanity threshold;
-- ligand RMSD/COM do not exceed broad tutorial sanity bounds;
-- contacts and visualization files are generated.
+- ligand RMSD/COM do not exceed broad tutorial sanity bounds. Note that the
+  analysis reads the single key `max_ligand_aligned_rmsd_nm_quick` (0.80 nm) for
+  both profiles, because `configs/profiles.yaml:phase3.gates` defines no separate
+  teaching value; the same ligand-RMSD bound therefore applies to `quick` and
+  `teaching`, while `max_protein_ca_rmsd_nm` (0.90 nm) is shared by both;
+- contacts and visualization files are generated (`contact_occupancy.csv`,
+  `binding_site_snapshots.json`/`.png`, `ligand_identity_2d.png`).
 
 A failed ligand-position gate triggers inspection; it must not be “fixed” by adding hidden restraints to production.

@@ -27,18 +27,29 @@ This repository is designed to be operated by a local coding agent/LLM under hum
 | 6 | Replicas and statistics | seeds, convergence, uncertainty, ensemble comparison | replicate agreement/uncertainty reported |
 | 7 | Advanced sampling and ML | TICA/MSM, enhanced sampling, graph/latent models | method-specific validation only |
 
+Phases 0 to 5 have runnable Makefile targets. Phases 6 and 7 are specified in
+`docs/07_PHASE6_7_REPLICAS_ADVANCED.md` and have no scripts or targets yet; the
+`phaseN*` targets are defined only for N = 1..5.
+
 ## One-command entry points
 
 ```bash
 make help
 make bootstrap
 make doctor
+make status
+make test
 make phase1 PROFILE=quick
 make phase1-analysis PROFILE=quick
 make phase1-view PROFILE=quick
 ```
 
-The same naming pattern is used for later phases. Run `make help` for the exact targets.
+Phases 1 to 5 use the same naming pattern: `phaseN`, `phaseN-analysis`, and
+`phaseN-view` (implemented for phases 1 to 5 by `scripts/render_trajectory.py`).
+Run `make help` for the exact targets. Two targets have extra behavior:
+`make phase5-analysis` runs `scripts/phase5_analyze.py` and then records progress,
+and for `PROFILE=teaching` it leaves Phase 5 in `AWAITING_HUMAN_DECISION` instead
+of `PASS_TEACHING` (see `docs/06_PHASE5_5HT2A_RESEARCH.md`).
 
 ## Profiles
 
@@ -52,11 +63,14 @@ All numerical settings are in `configs/profiles.yaml`. Every run copies its reso
 
 1. `AGENTS.md`
 2. `agent/STATE_MACHINE.md`
-3. `docs/00_SCIENTIFIC_PRINCIPLES.md`
-4. The document for the current phase
-5. `docs/08_VISUALIZATION.md`
-6. `docs/09_VALIDATION_TROUBLESHOOTING.md`
-7. `docs/10_REPRODUCIBILITY_REPORTING.md`
+3. `docs/README.md` (documentation index)
+4. `docs/00_SCIENTIFIC_PRINCIPLES.md`
+5. The document for the current phase
+6. `docs/08_VISUALIZATION.md` and `docs/12_RUN_ARTIFACTS.md`
+7. `docs/09_VALIDATION_TROUBLESHOOTING.md`
+8. `docs/10_REPRODUCIBILITY_REPORTING.md`
+
+`PROJECT_MANIFEST.md` maps every tracked file to its role.
 
 ## Directory contract
 
@@ -67,12 +81,21 @@ artifacts/    compact exports intended for sharing
 configs/      version-controlled parameters
 src/mdlab/    reusable Python package
 scripts/      executable phase entry points
-state/        agent progress and machine-readable gates
+tests/        repository unit and analysis tests (`make test` runs `tests/`)
+state/        agent progress, gates, decision records, and environment exports
 notebooks/    optional explanatory notebooks; scripts remain authoritative
-docs/         scientific and operational documentation
+docs/         scientific and operational documentation (start at docs/README.md)
+agent/        agent operating prompt and state machine
+gui/          reference snapshot of the 5-HT2A campaign viewer (see gui/README.md)
+planes/       multi-phase implementation plans and their progress notes
 ```
 
-Never edit a file under `inputs/` in place. Derived structures go under the relevant `outputs/<phase>/<run_id>/prepared/` directory.
+Never edit a file under `inputs/` in place. Derived structures go under the relevant `outputs/<phase>/<run_id>/prepared/` directory. The per-run layout, `manifest.json`, and `gate.json` contract are specified in `docs/12_RUN_ARTIFACTS.md`.
+
+The `5ht2a_md/` directory (the production CHARMM-GUI/GROMACS 5-HT2A campaign, its
+own GUI backend, and its own tests) is a separate git repository with its own
+history, is listed in `.gitignore`, and is not documented or tested by the targets
+in this repository's root `Makefile`. The same applies to `5ht2a_mm`.
 
 ## Scientific scope and limits
 
@@ -84,8 +107,8 @@ This project teaches and validates classical all-atom molecular dynamics. A succ
 - OpenMM Force Fields 0.16.0 for explicit small-molecule template generation.
 - OpenFF Toolkit 0.18.1 with the explicitly named `openff-2.2.1` small-molecule force field in Phase 3.
 - MDAnalysis and MDTraj for analysis.
-- py3Dmol for standalone interactive HTML views.
-- Create envirnonments with conda but always install packages with pip, never install anything with conda or conda forge.
+- 3Dmol.js (loaded from its CDN by the generated `viewer.html`) for interactive HTML views, plus a generated VMD script for fully offline inspection. `py3Dmol` is installed for notebook use; the launchers do not depend on it.
+- Create environments with conda but always install packages with pip, never install anything with conda or conda forge.
 - Always check if the system CUDA works for the needed packages and try to use that, do not install another CUDA version in the system or break anything working, you can install packages and CUDA versions only in the conda mdlab environment
 
 The exact solved environment on the target workstation is exported after bootstrap. If the solver cannot satisfy the pinned environment, the agent must stop and report the conflict rather than silently changing scientific dependencies.
@@ -106,3 +129,5 @@ The project is complete only when each executed phase contains:
 - `gate.json` with `PASS` or `FAIL`
 
 The agent must never mark a phase complete based only on the process exiting with code zero.
+
+The exact file names, `manifest.json` fields, and `gate.json` shape that implement this criterion are specified in `docs/12_RUN_ARTIFACTS.md`.

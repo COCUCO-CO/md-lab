@@ -45,9 +45,48 @@ Visualization is a required validation method, not decoration.
 - protein surface colored by hydrophobicity only if the scale is documented;
 - membrane density profiles beside representative snapshots.
 
-## Standalone HTML
+## Generated viewers
 
-`render_trajectory.py` creates a self-contained or locally loadable py3Dmol HTML viewer from a downsampled solute trajectory. It is intended for easy inspection in Chrome. The authoritative trajectory remains DCD/XTC plus topology; the HTML is a derived visualization.
+`scripts/render_trajectory.py --phase N --profile P [--max-frames M]` is the
+supported viewer launcher (`make phaseN-view PROFILE=quick`, N = 1..5). It
+resolves the latest run of that phase and profile, extracts a solute selection
+from the production (Phase 1: NVT) trajectory, and writes three files:
+
+```text
+visualization/trajectory_multimodel.pdb  downsampled solute frames + box records
+visualization/viewer.html              interactive 3Dmol.js page
+visualization/viewer.vmd               equivalent VMD startup script
+```
+
+Facts to know before opening a viewer:
+
+- `viewer.html` embeds the coordinates and loads the 3Dmol.js script from
+  `https://3Dmol.org/build/3Dmol-min.js`, so the page needs network access to
+  that CDN. For a fully offline view run `vmd -e viewer.vmd` from the
+  `visualization/` directory.
+- The viewer is a visualization of a downsampled solute subset, never the
+  authoritative data. The authoritative data are `simulation/production.dcd`
+  (Phase 1: `nvt.dcd`) plus `prepared/system.pdb` (`initial.pdb` in Phase 1).
+- `--max-frames` is a cap, not an exact count; the script thins the trajectory to
+  at most that many frames and Phase 4 and Phase 5 additionally cap the viewer to
+  12 frames so the HTML stays loadable. Phase 4 and Phase 5 also re-center each
+  protein chain and every other residue under periodic boundaries before writing
+  the multimodel PDB, so a molecule cannot span the box in the viewer.
+- Phase 4 includes protein, lipid (`POP`) and the retained source waters, so the
+  approved crystallographic waters can be watched inside the channel.
+- Phase 5 writes one viewer per condition under
+  `systems/<condition>/visualization/` and a landing page
+  `visualization/index.html` that links both, and it also writes `viewer.vmd`
+  scripts that read the full DCD with `pbc wrap` applied.
+- `py3Dmol` is installed for notebook use (`notebooks/`); the launcher above does
+  not depend on it.
+
+In the accepted Phase 5 runs the reviewer also stored browser screenshots of both
+viewers as inspection evidence
+(`analysis/lsd_html_viewer.png`, `analysis/lisuride_html_viewer.png`,
+`analysis/viewer_verification.json`), listed in the `evidence` array of
+`analysis/visual_inspection.json`, which is a gate input
+(see `12_RUN_ARTIFACTS.md` and `06_PHASE5_5HT2A_RESEARCH.md`).
 
 ## Plot standards
 

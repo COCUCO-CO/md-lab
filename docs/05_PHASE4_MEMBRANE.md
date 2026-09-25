@@ -103,10 +103,25 @@ Required plots:
 - retained-source and all-water occupancy in the membrane core and operational
   pore cylinders.
 
-Static cross-sections are generated before the gate is finalized. The reviewer
-records all mandatory visual checks in
-`analysis/visual_inspection.json`; missing visual evidence is not treated as a
-pass.
+Static cross-sections are generated before the gate is finalized. The
+analysis script runs in two stages: `python scripts/phase4_analyze.py --profile
+<profile> --figures-only` writes the metrics, `preliminary_metrics.json`, and the
+static figures and stops with `FIGURES_READY_FOR_VISUAL_INSPECTION`; the reviewer
+then records all mandatory visual checks in `analysis/visual_inspection.json`
+with exactly these keys, all set from direct inspection:
+
+```text
+hydrophobic_region_overlaps_lipid_tails_pass
+domains_hydrated_pass
+no_lipid_tail_through_protein_core_pass
+no_large_vacuum_gap_pass
+leaflets_continuous_pass
+oligomer_intact_pass
+membrane_normal_z_pass
+```
+
+The final analysis run reads that file; a missing record or a missing key is a
+hard error, and missing visual evidence is never treated as a pass.
 
 ### Step 4.5 — Understand membrane metrics
 

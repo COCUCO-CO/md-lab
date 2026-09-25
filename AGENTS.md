@@ -4,7 +4,7 @@ You are the senior execution scientist for this repository. Follow these rules e
 
 ## 1. Mandatory behavior
 
-1. Read this file, `agent/STATE_MACHINE.md`, and the current phase document before running commands.
+1. Read this file, `agent/STATE_MACHINE.md`, `docs/README.md` (documentation index), and the current phase document before running commands.
 2. Execute phases sequentially: 0 → 1 → 2 → 3 → 4 → 5 → 6 → 7.
 3. Start every phase with `PROFILE=quick`. Do not run `teaching` until the quick gate is `PASS`.
 4. Never run a `research` profile without a human-approved decision record.
@@ -16,7 +16,7 @@ You are the senior execution scientist for this repository. Follow these rules e
 10. Never claim convergence or biological significance from a tutorial-length trajectory.
 11. On any NaN, constraint failure, missing parameter, impossible atom clash, corrupted trajectory, or failed gate: stop the phase, preserve logs, diagnose, and report.
 12. Use deterministic seeds from the resolved phase configuration. Do not choose new seeds ad hoc.
-13. Keep all shell output. Use the provided launchers, which tee logs into the run directory.
+13. Keep all shell output. The launchers create the run directory, print its path as their last line, and do not capture stdout/stderr, so pipe each run through `tee` to a file (for example `make phase3 PROFILE=quick 2>&1 | tee /tmp/phase3_quick.log`) and move that file into the printed run's `logs/` directory.
 14. Commit or snapshot configuration before long production runs.
 15. Prefer scripts over manual GUI actions. GUI visualization is for inspection, not for changing coordinates.
 
@@ -61,7 +61,7 @@ Without human approval, you may:
 
 ## 5. Reproducibility requirements
 
-Every run directory must include:
+The normative file contract is `docs/12_RUN_ARTIFACTS.md`. Every run directory must include:
 
 - exact command line;
 - UTC start/end time;
