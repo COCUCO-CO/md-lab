@@ -150,8 +150,42 @@ python scripts/phase5_analyze.py --profile quick --figures-only
 ```
 
 Inspect both systems in the static figures, HTML viewer and VMD, then record
-`analysis/visual_inspection.json` and rerun the normal analysis target. A
-passing `quick` gate is mandatory before using `PROFILE=teaching`.
+`analysis/visual_inspection.json` and rerun the normal analysis target. The
+record must contain, for each of `lsd` and `lisuride`, the keys
+`binding_pose_present_pass`, `membrane_embedded_pass`, `no_obvious_clash_pass`,
+`bilayer_continuous_pass`, and `solvent_both_sides_pass`, plus the inspected
+evidence files; see `12_RUN_ARTIFACTS.md`. A passing `quick` gate is mandatory
+before using `PROFILE=teaching`.
+
+## Run layout and gate composition
+
+One Phase 5 run builds and simulates both approved conditions side by side under
+the same Hamiltonian, membrane, and restraint schedule. Per condition the launcher
+creates `systems/<condition>/prepared|simulation|analysis|figures|visualization`,
+so `prepared/system.pdb`, `prepared/protonation_table.json`,
+`prepared/ligand_identity.json`, the AM1-BCC charge table, and the
+production trajectory exist twice, and `analysis/metrics.json` and
+`analysis/checks.json` are per condition. The run root keeps `gate.json`,
+`REPORT.md`, `analysis/contact_comparison.json` (the pre-registered differential
+contact comparison), `analysis/preliminary_metrics.json`, and the reviewer
+evidence. The full file contract is in `12_RUN_ARTIFACTS.md`.
+
+Each condition is gated by 24 numerical, structural, chemical, and visual checks
+(included here so a reviewer can audit the gate without reading the script):
+finite values; approved construct (367 polymer residues, zero retained source
+waters, exactly the condition ligand as retained heterogen); loop validation;
+ligand chemistry (approved formal charge and AM1-BCC sum of exactly +1); all atoms
+parameterized; membrane barostat present; barostat pressure; temperature;
+density-driven membrane thickness; area per lipid; leaflet balance; outer-solvent
+coverage; bond geometry; prepared inter-component geometry; protein transmembrane
+Cα RMSD; ligand aligned RMSD; ligand center-of-mass displacement; thermodynamic
+and equilibration row counts; trajectory and checkpoint readability;
+unrestrained pre-production; required figures; and the visual-inspection record.
+
+Structure-selection evidence for the approved pair is recorded in
+`state/decisions/PHASE5_SOURCE_AUDIT.md` (candidate comparison, construct
+features, ligand formulas and protonation atoms, OPM orientation source, and the
+SHA-256 of every immutable input).
 
 The `research` profile remains unavailable until the separate pre-production
 human gate approves the prepared visualizations, protonation and ligand
